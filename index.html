@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pipeline · reFINAL — 1x, nicht 2x — NC</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0d11;color:#f0f2f8;font-family:Inter,system-ui,sans-serif;padding:16px}
+.nc{max-width:1360px;margin:0 auto 12px;background:#111827;border:2px solid #ffcc33;border-radius:16px;padding:12px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.nc b{color:#ffcc33}.nc button{cursor:pointer;border:1px solid #2c3444;background:#1a1f2a;color:#fff;border-radius:999px;padding:8px 14px;font-weight:700}
+.nc button.gold{background:#ffcc33;color:#090d14}
+.wrap{max-width:1360px;margin:0 auto;background:#13171e;border:1px solid #2c3444;border-radius:16px;padding:24px}
+h1{margin:0;font-size:26px}.sub{color:#9aa4b8;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:#1a1f2a;border:1px solid #2c3444;border-radius:10px;padding:14px}.stat b{font-size:26px;display:block}
+.flow{background:#1a1f2a;border:1px solid #2c3444;border-radius:14px;padding:18px;overflow-x:auto}
+.stages{display:flex;gap:8px;align-items:center;min-width:fit-content}
+.node{display:flex;flex-direction:column;align-items:center;min-width:110px}.circle{width:64px;height:64px;border-radius:50%;border:2px solid #2c3444;display:flex;align-items:center;justify-content:center;font-size:24px;background:#13171e}
+.node.success .circle{border-color:#2ed98c;background:rgba(46,217,140,.15);color:#2ed98c}
+.node.running .circle{border-color:#f5b342;background:rgba(245,179,66,.15);color:#f5b342;animation:spin 1.2s linear infinite}
+.node.pending .circle{color:#6b768a}
+@keyframes spin{to{transform:rotate(360deg)}}
+.conn{flex:0 0 42px;height:3px;background:#2c3444;border-radius:2px}.conn.success{background:#2ed98c}.conn.active{background:#4b7cf7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.panel{background:#1a1f2a;border:1px solid #2c3444;border-radius:10px;padding:16px}
+.log{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:8px}.log div{background:#13171e;border-left:3px solid #2c3444;padding:8px 10px;border-radius:8px;font-size:13px}
+.log div.success{border-left-color:#2ed98c}.log div.warning{border-left-color:#f5b342}.log div.info{border-left-color:#4b7cf7}
+.btn{margin-top:16px;background:#4b7cf7;border:none;color:#fff;font-weight:700;padding:12px 28px;border-radius:999px;cursor:pointer}
+.mono{font-family:ui-monospace,monospace;font-size:12px;color:#9aa4b8;white-space:pre-wrap}
+.fix{background:#2a0a1a;border:1px solid #f25a6a;border-radius:12px;padding:12px;margin-bottom:12px;font-size:13px}
+</style></head><body>
+<div class="nc"><div><b>NC.SUITE // 9 EVIG // iki9uc = 9</b> &nbsp;·&nbsp; B = <b id="resB">1.000</b> · L = <b id="resL">0.000</b> · HALT = <b id="halt">OFFEN</b> · Ebene = <b id="ebene">0</b> · f(x)=min(x,40)</div><div><button class="gold" id="btnAdd">＋ ADD ON</button><button id="btnMore">＋ MORE</button><button id="btnWunder">✦ WUNDER → HOME 40</button></div></div>
+<div class="wrap">
+<div class="fix"><b>FIX:</b> Deine Datei hatte 2x &lt;!DOCTYPE html&gt;, 2x gleiche IDs. Browser nimmt nur 1. Zweite war tot. Diese Datei: <b>1x DOCTYPE, 1x Pipeline, IDs 1x.</b> Alt links: alte Datei bleibt. Neu rechts: diese Datei ist die saubere.</div>
+<h1>pipeline <span style="color:#9aa4b8;font-weight:400">· reFINAL — 1x</span></h1>
+<p class="sub">iki1uc / our.oi · index.html ist nur die TÜR · Diese Pipeline ist P4, nicht alle. 8 Pipeline + 9 Module = 17 Plätze, 1 Name = 1 Platz.</p>
+<div class="stats">
+<div class="stat">Gesamt<b>6</b>Stufen</div>
+<div class="stat">Erfolgreich<b style="color:#2ed98c" id="successCount">3</b>✓ abgeschlossen</div>
+<div class="stat">Laufend<b style="color:#f5b342" id="runningCount">1</b>in Bearbeitung</div>
+<div class="stat">Fehlgeschlagen<b style="color:#f25a6a" id="failedCount">0</b>Fehler</div>
+</div>
+<div class="flow"><div class="mono">PIPELINE · AUSFÜHRUNGSFLUSS — 1x, IDs 1x</div><div class="stages" id="pipelineStages"></div></div>
+<div class="grid2">
+<div class="panel"><h3 style="margin:0 0 10px">Live-Logs — Zeuge</h3><div class="log" id="logList"></div><p class="mono" id="zeugeInfo">Zeuge: jede Aktion wird geloggt. Nichts gelöscht.</p></div>
+<div class="panel"><h3 style="margin:0 0 10px">Nächste Schritte</h3><p style="font-size:13px;color:#9aa4b8">Deployment · Stage 5 wartet<br>Integrationstests · 2 offen<br>Code-Review · abgeschlossen<br><br><b style="color:#fff">NC:</b> ADD ON = Ebene +1. MORE = mehr. WUNDER = HOME 40, Ebene bleibt. B = (DER+DIE+DAS)/3. Wenn B=1, L=0, HALT=ZIEL.</p><div style="margin-top:10px"><label class="mono">DER <input type="range" id="in-der" min="0" max="1" step="0.01" value="1"></label><label class="mono">DIE <input type="range" id="in-die" min="0" max="1" step="0.01" value="1"></label><label class="mono">DAS <input type="range" id="in-das" min="0" max="1" step="0.01" value="1"></label></div></div>
+</div>
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center"><p class="mono">Letzte Aktualisierung: <b id="lastUpdate" style="color:#fff">—</b></p><button class="btn" id="triggerBtn">▶ Pipeline auslösen</button></div>
+<p class="mono" id="zeuge">—</p>
+</div>
+<script>
+const f=x=>Math.min(x,40);
+let stages=[{id:'clone',label:'Clone',icon:'fa-solid fa-code',status:'success'},{id:'build',label:'Build',icon:'fa-solid fa-hammer',status:'success'},{id:'test',label:'Test',icon:'fa-solid fa-flask',status:'success'},{id:'analyze',label:'Analyze',icon:'fa-solid fa-magnifying-glass-chart',status:'running'},{id:'deploy',label:'Deploy',icon:'fa-solid fa-rocket',status:'pending'},{id:'verify',label:'Verify',icon:'fa-solid fa-check-double',status:'pending'}];
+let logs=[{icon:'✅',text:'<b>Clone</b> · Repository erfolgreich geklont',type:'success'},{icon:'⚙',text:'<b>Build</b> · 120 Module kompiliert',type:'success'},{icon:'🧪',text:'<b>Test</b> · 47 Tests bestanden, 0 Fehler',type:'success'},{icon:'📊',text:'<b>Analyze</b> · Code-Scan läuft …',type:'warning'}];
+let ebene=0, running=false, zeuge=[];
+function now(){return new Date().toLocaleTimeString('de-DE')}
+function log(a,d){zeuge.unshift(`[${now()}] ${a} — ${d}`); document.getElementById('zeuge').textContent=zeuge.slice(0,20).join('\n');}
+function render(){
+ document.getElementById('pipelineStages').innerHTML=stages.map((s,i)=>`<div class="node ${s.status}"><div class="circle"><i class="${s.icon}"></i></div><div style="font-size:13px;margin-top:8px">${s.label}</div><div style="font-size:11px;color:#6b768a">${s.status==='running'?'läuft …':s.status==='success'?'✓ fertig':s.status==='failed'?'✗ fehler':'⏳ wartet'}</div></div>${i<stages.length-1?`<div class="conn ${s.status==='success'?'success':s.status==='running'?'active':''}"></div>`:''}`).join('');
+ document.getElementById('logList').innerHTML=logs.map(l=>`<div class="${l.type}">${l.icon} ${l.text} · <span style="color:#6b768a">${now()}</span></div>`).join('');
+ document.getElementById('successCount').textContent=stages.filter(s=>s.status==='success').length;
+ document.getElementById('runningCount').textContent=stages.filter(s=>s.status==='running').length;
+ document.getElementById('failedCount').textContent=stages.filter(s=>s.status==='failed').length;
+ const B=(+document.getElementById('in-der').value + +document.getElementById('in-die').value + +document.getElementById('in-das').value)/3;
+ document.getElementById('resB').textContent=B.toFixed(3); document.getElementById('resL').textContent=(1-B).toFixed(3);
+ document.getElementById('halt').textContent=B===1?'ZIEL':'OFFEN';
+ document.getElementById('ebene').textContent=ebene;
+ document.getElementById('lastUpdate').textContent=now();
+}
+document.getElementById('triggerBtn').onclick=()=>{
+ if(running) return; running=true;
+ document.getElementById('triggerBtn').textContent='… läuft …';
+ let step=0;
+ const iv=setInterval(()=>{
+   step++;
+   if(step<=6){ stages[step-1]&&(stages[step-1].status='success'); if(stages[step]) stages[step].status='running'; logs.unshift({icon:'✅',text:'<b>'+(stages[step-1]?.label||'Step')+'</b> · fertig',type:'success'}); }
+   if(step>=7){ clearInterval(iv); running=false; document.getElementById('triggerBtn').textContent='▶ Pipeline auslösen'; logs.unshift({icon:'🏁',text:'<b>Pipeline</b> · Alle Stufen fertig',type:'success'}); log('PIPELINE','Alle 6 Stufen fertig. 1x, nicht 2x.'); }
+   render();
+ },700);
+};
+['in-der','in-die','in-das'].forEach(id=>document.getElementById(id).oninput=render);
+document.getElementById('btnAdd').onclick=()=>{ebene++; log('ADD ON','Ebene '+ebene+' · f(x)=min(x,40)'); render();};
+document.getElementById('btnMore').onclick=()=>{ebene++; log('MORE','Ebene '+ebene+' · mehr und meer'); render();};
+document.getElementById('btnWunder').onclick=()=>{log('WUNDER','HOME 40 · Ebene '+ebene+' bleibt'); render();};
+render(); log('FIX','Duplikat entfernt. 1x DOCTYPE, 1x IDs, 1x Pipeline. 8+9 haben jetzt nicht mehr selbe index.');
+</script></body></html>
